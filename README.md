@@ -1,4 +1,4 @@
-## uOttaHack 7 Project
+## uOttaHack 7 Project Submission
 
 ThreatWatch is our team's submission to DeepCode's challenge for uOttaHack 7. We used Next.js , Shadcn and Tailwind for the front-end, and Nest.js, Typescript and MySQL for the back-end.
 
