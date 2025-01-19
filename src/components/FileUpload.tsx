@@ -11,6 +11,7 @@ import {
   type DropzoneState as _DropzoneState
 } from 'react-dropzone'
 import { Button } from './ui/button';
+import { parseData } from '@/services/parse';
 
 export interface DropzoneState extends _DropzoneState {}
 
@@ -120,10 +121,9 @@ const Dropzone = ({
     ])
   }
 
-  const parseFile = () => {
-    filesUploaded?.map(file => {
-      console.log(file)
-    })
+  const parseFile = async() => {
+    if (filesUploaded.length == 0) return
+    await parseData(filesUploaded[0])
   }
 
   // Return:
