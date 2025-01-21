@@ -26,6 +26,27 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
+function FilterInput({
+  placeholder,
+  value,
+  onChange,
+}: {
+  placeholder: string;
+  value: string | undefined;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className='flex items-center py-1'>
+      <Input
+        placeholder={placeholder}
+        value={value ?? ""}
+        onChange={(event) => onChange(event.target.value)}
+        className='max-w-sm'
+      />
+    </div>
+  );
+}
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -33,6 +54,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
   const table = useReactTable({
     data,
     columns,
@@ -46,67 +68,22 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter urls...'
-          value={(table.getColumn("url")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("url")?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm'
-        />
-      </div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter usernames...'
-          value={
-            (table.getColumn("username")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("username")?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm'
-        />
-      </div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter passwords...'
-          value={
-            (table.getColumn("password")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("password")?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm'
-        />
-      </div>
-      <div className='flex items-center py-4'>
-        <Input
-          placeholder='Filter tags...'
-          value={(table.getColumn("tags")?.getFilterValue() as string[]) ?? ""}
-          onChange={(event) =>
-            table.getColumn("tags")?.setFilterValue(event.target.value)
-          }
-          className='max-w-sm'
-        />
-      </div>
-      <div className='rounded-md border w-full'>
+      {/* Table section */}
+      <div className='rounded-md border w-full mt-4'>
         <Table className='w-full'>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -140,6 +117,8 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination section */}
       <div className='flex items-center justify-end space-x-2 py-4'>
         <Button
           variant='outline'

@@ -17,7 +17,6 @@ import {
 
 // This is sample data.
 const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
       title: "Navbar",
@@ -38,8 +37,6 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  let url = window.location.href;
-  console.log("the url is " + url);
   return (
     <Sidebar {...props}>
       <SidebarContent>

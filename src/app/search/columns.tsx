@@ -10,10 +10,15 @@ export type ParsedString = {
   password: string;
   url: string;
   domain: string;
+  app: string;
   ipAddress: string;
-  tags: string[];
+  tags: string;
   status: number;
   title: string;
+  port: number;
+  urlPath: string;
+  protocol: string;
+  routableOnly: boolean;
 };
 
 export const columns: ColumnDef<ParsedString>[] = [
@@ -46,6 +51,13 @@ export const columns: ColumnDef<ParsedString>[] = [
     ),
   },
   {
+    accessorKey: "app",
+    header: () => <div className='text-left'>App</div>,
+    cell: ({ row }) => (
+      <div className='text-left font-medium'>{row.getValue("app")}</div>
+    ),
+  },
+  {
     accessorKey: "ipAddress",
     header: () => <div className='text-left'>IP Address</div>,
     cell: ({ row }) => (
@@ -56,9 +68,7 @@ export const columns: ColumnDef<ParsedString>[] = [
     accessorKey: "tags",
     header: () => <div className='text-left'>Tags</div>,
     cell: ({ row }) => (
-      <div className='text-left font-medium'>
-        {(row.getValue("tags") as string[]).join(", ")}
-      </div>
+      <div className='text-left font-medium'>{row.getValue("tags")}</div>
     ),
   },
   {
@@ -73,6 +83,27 @@ export const columns: ColumnDef<ParsedString>[] = [
     header: () => <div className='text-left'>Title</div>,
     cell: ({ row }) => (
       <div className='text-left font-medium'>{row.getValue("title")}</div>
+    ),
+  },
+  {
+    accessorKey: "port",
+    header: () => <div className='text-left'>Port</div>,
+    cell: ({ row }) => (
+      <div className='text-left font-medium'>{row.getValue("port")}</div>
+    ),
+  },
+  {
+    accessorKey: "urlPath",
+    header: () => <div className='text-left'>URL Path</div>,
+    cell: ({ row }) => (
+      <div className='text-left font-medium'>{row.getValue("urlPath")}</div>
+    ),
+  },
+  {
+    accessorKey: "protocol",
+    header: () => <div className='text-left'>Protocol</div>,
+    cell: ({ row }) => (
+      <div className='text-left font-medium'>{row.getValue("protocol")}</div>
     ),
   },
 ];
